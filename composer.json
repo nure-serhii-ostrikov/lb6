@@ -1,0 +1,7 @@
+{
+  "name": "serost/lb2",
+  "description": "A PHP project with MongoDB support",
+  "require": {
+    "mongodb/mongodb": "^1.9"
+  }
+}
