@@ -28,9 +28,9 @@ $movies = $collection->find($filter);
 </head>
 <body>
     <h1>Домашня фільмотека</h1>
-    <form method="GET">
+    <form method="GET" id="searchForm">
         <label for="media_type">Тип носія:</label>
-        <select name="media_type">
+        <select name="media_type" id="media_type">
             <option value="">-- Виберіть --</option>
             <option value="VHS">Відеокасета</option>
             <option value="CD">CD</option>
@@ -39,14 +39,34 @@ $movies = $collection->find($filter);
         </select>
         
         <label for="actor">Актор:</label>
-        <input type="text" name="actor" placeholder="Введіть ім'я актора">
+        <input type="text" name="actor" id="actor" placeholder="Введіть ім'я актора">
         
         <label>
-            <input type="checkbox" name="new_releases" value="1"> Новинки цього року
+            <input type="checkbox" name="new_releases" id="new_releases" value="1"> Новинки цього року
         </label>
         
         <button type="submit">Пошук</button>
     </form>
+
+    <script>
+    // Load saved preferences from localStorage
+    window.addEventListener('DOMContentLoaded', () => {
+        const mediaType = localStorage.getItem('media_type');
+        const actor = localStorage.getItem('actor');
+        const newReleases = localStorage.getItem('new_releases');
+
+        if (mediaType) document.getElementById('media_type').value = mediaType;
+        if (actor) document.getElementById('actor').value = actor;
+        if (newReleases === '1') document.getElementById('new_releases').checked = true;
+    });
+
+    // Save preferences to localStorage on form submit
+    document.getElementById('searchForm').addEventListener('submit', () => {
+        localStorage.setItem('media_type', document.getElementById('media_type').value);
+        localStorage.setItem('actor', document.getElementById('actor').value);
+        localStorage.setItem('new_releases', document.getElementById('new_releases').checked ? '1' : '');
+    });
+    </script>
 
     <h2>Результати пошуку:</h2>
     <ul>
